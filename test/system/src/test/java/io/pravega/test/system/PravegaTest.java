@@ -56,6 +56,7 @@ public class PravegaTest {
     private final static String STREAM_SCOPE = "testScopeSampleY";
     private final static String READER_GROUP = "ExampleReaderGroupY";
     private final static int NUM_EVENTS = 100;
+    AbstractFailoverTests.TestState testState;
 
     @Rule
     public Timeout globalTimeout = Timeout.seconds(12 * 60);
@@ -191,6 +192,17 @@ public class PravegaTest {
         }
         reader.close();
         groupManager.deleteReaderGroup(READER_GROUP);
+
+        boolean failed = false;
+        //testState.checkForAnomalies();
+        testState = new AbstractFailoverTests.TestState(false);
+        long eventReadCount = testState.getEventReadCount();
+        long eventWrittenCount = testState.getEventWrittenCount();
+        if (eventReadCount != eventWrittenCount) {
+            failed = true;
+            log.error("Read write count mismatch => readCount = {}, writeCount = {}", eventReadCount, eventWrittenCount);
+        }
+
     }
 
 }
