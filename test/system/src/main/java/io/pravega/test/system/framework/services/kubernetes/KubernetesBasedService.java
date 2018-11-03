@@ -18,8 +18,6 @@ import io.fabric8.kubernetes.client.Config;
 import io.fabric8.kubernetes.client.ConfigBuilder;
 import io.pravega.common.concurrent.Futures;
 import io.pravega.test.system.framework.TestFrameworkException;
-import io.pravega.test.system.framework.fabric8io.DeploymentExamples;
-import io.pravega.test.system.framework.marathon.AuthEnabledMarathonClient;
 import java.net.URI;
 import java.time.Duration;
 import java.util.*;
@@ -29,25 +27,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
-import mesosphere.marathon.client.MarathonException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-/*
-import mesosphere.marathon.client.Marathon;
-import mesosphere.marathon.client.model.v2.App;
-import mesosphere.marathon.client.model.v2.GetAppResponse;
-import mesosphere.marathon.client.model.v2.HealthCheck;
-import mesosphere.marathon.client.model.v2.LocalVolume;
-import mesosphere.marathon.client.model.v2.PortDefinition;
-import mesosphere.marathon.client.model.v2.Volume;
-import mesosphere.marathon.client.model.v2.Result;
-import mesosphere.marathon.client.MarathonException;
-*/
-
 import static io.netty.handler.codec.http.HttpResponseStatus.CONFLICT;
 import static io.netty.handler.codec.http.HttpResponseStatus.NOT_FOUND;
-//import io.pravega.test.system.framework.services.Service;
 import static io.pravega.test.system.framework.TestFrameworkException.Type.InternalError;
 import static io.pravega.test.system.framework.TestFrameworkException.Type.RequestFailed;
 
