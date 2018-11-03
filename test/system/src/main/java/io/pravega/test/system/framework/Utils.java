@@ -15,10 +15,14 @@ import io.pravega.test.system.framework.services.docker.HDFSDockerService;
 import io.pravega.test.system.framework.services.docker.PravegaControllerDockerService;
 import io.pravega.test.system.framework.services.docker.PravegaSegmentStoreDockerService;
 import io.pravega.test.system.framework.services.docker.ZookeeperDockerService;
+//import io.pravega.test.system.framework.services.kubernetes.PravegaControllerKubernetesService;
+//import io.pravega.test.system.framework.services.kubernetes.PravegaSegmentStoreKubernetesService;
 import io.pravega.test.system.framework.services.marathon.BookkeeperService;
 import io.pravega.test.system.framework.services.marathon.PravegaControllerService;
 import io.pravega.test.system.framework.services.marathon.PravegaSegmentStoreService;
 import io.pravega.test.system.framework.services.marathon.ZookeeperService;
+import io.pravega.test.system.framework.services.kubernetes.ZookeeperKubernetesService;
+import io.pravega.test.system.framework.services.kubernetes.BookkeeperKubernetesService;
 import java.net.URI;
 
 /**
@@ -46,19 +50,19 @@ public class Utils {
 
     public static Service createZookeeperService() {
         return DOCKER_BASED ? new ZookeeperDockerService("zookeeper")
-                : new ZookeeperService("zookeeper");
+                : /*new ZookeeperService("zookeeper"); */new ZookeeperKubernetesService("zookeeper");
     }
 
     public static Service createBookkeeperService(final URI zkUri) {
         return DOCKER_BASED ?
                 new BookkeeperDockerService("bookkeeper", zkUri) :
-                new BookkeeperService("bookkeeper", zkUri);
+                /*new BookkeeperService("bookkeeper", zkUri); */new BookkeeperKubernetesService("bookkeeper", zkUri);
     }
 
     public static Service createPravegaControllerService(final URI zkUri, String serviceName) {
         return DOCKER_BASED
                 ? new PravegaControllerDockerService(serviceName, zkUri)
-                : new PravegaControllerService(serviceName, zkUri);
+                : new PravegaControllerService(serviceName, zkUri); /*new PravegaControllerKubernetesService(serviceName, zkUri);*/
     }
 
     public static Service createPravegaControllerService(final URI zkUri) {
@@ -76,7 +80,7 @@ public class Utils {
         }
         return DOCKER_BASED ?
                 new PravegaSegmentStoreDockerService("segmentstore", zkUri, hdfsUri, contUri)
-                : new PravegaSegmentStoreService("segmentstore", zkUri, contUri);
+                : new PravegaSegmentStoreService("segmentstore", zkUri, contUri);   /*new PravegaSegmentStoreKubernetesService("segmentstore", zkUri, contUri);*/
     }
 
     /**
